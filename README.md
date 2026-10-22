@@ -1,181 +1,181 @@
-# 🤖 WhatsApp AI Agent — وكيل خدمة العملاء الذكي
+# 🤖 WhatsApp AI Agent — Smart Customer Service Agent
 
-وكيل ذكاء اصطناعي يرد على العملاء عبر واتساب بشكل تلقائي.  
-مبني بـ **LangGraph + Gemini (OpenRouter) + Twilio + FastAPI**
+An AI agent that replies to customers on WhatsApp automatically.  
+Built with **LangGraph + Gemini (OpenRouter) + Twilio + FastAPI**
 
 ---
 
-## ⚡ تشغيل كامل في 30 دقيقة
+## ⚡ Full Setup in 30 Minutes
 
-### الخطوة 1 — المتطلبات الأولية (5 دقائق)
+### Step 1 — Prerequisites (5 minutes)
 
-تأكد أن عندك:
+Make sure you have:
 - Python 3.11+
-- حساب على [Twilio](https://www.twilio.com/try-twilio) (مجاني)
-- حساب على [OpenRouter](https://openrouter.ai) (مجاني)
-- [ngrok](https://ngrok.com/download) مثبّت
+- A [Twilio](https://www.twilio.com/try-twilio) account (free)
+- An [OpenRouter](https://openrouter.ai) account (free)
+- [ngrok](https://ngrok.com/download) installed
 
 ---
 
-### الخطوة 2 — إعداد المشروع (5 دقائق)
+### Step 2 — Project Setup (5 minutes)
 
 ```bash
-# 1. افتح المجلد في VS Code
+# 1. Open the folder in VS Code
 cd whatsapp_agent
 
-# 2. أنشئ البيئة الافتراضية
+# 2. Create a virtual environment
 python -m venv venv
 
-# 3. فعّل البيئة
+# 3. Activate the environment
 # Windows:
 venv\Scripts\activate
 # Mac/Linux:
 source venv/bin/activate
 
-# 4. ثبّت المكتبات
+# 4. Install the dependencies
 pip install -r requirements.txt
 ```
 
 ---
 
-### الخطوة 3 — إعداد المتغيرات (10 دقائق)
-افتح ملف `env.` وأضف القيم:
+### Step 3 — Environment Variables (10 minutes)
+Open the `.env` file and add the values:
 
-#### 🔑 Twilio (مجاني):
-1. اذهب لـ [console.twilio.com](https://console.twilio.com)
-2. من الصفحة الرئيسية انسخ:
+#### 🔑 Twilio (free):
+1. Go to [console.twilio.com](https://console.twilio.com)
+2. From the home page, copy:
    - **Account SID** → `TWILIO_ACCOUNT_SID`
    - **Auth Token** → `TWILIO_AUTH_TOKEN`
 
-#### 🤖 OpenRouter (مجاني):
-1. اذهب لـ [openrouter.ai](https://openrouter.ai)
-2. سجّل دخول → **API Keys** → **Create Key**
-3. انسخ المفتاح → `OPENROUTER_API_KEY`
+#### 🤖 OpenRouter (free):
+1. Go to [openrouter.ai](https://openrouter.ai)
+2. Sign in → **API Keys** → **Create Key**
+3. Copy the key → `OPENROUTER_API_KEY`
 
 ---
 
-### الخطوة 4 — تشغيل الخادم (2 دقيقة)
+### Step 4 — Run the Server (2 minutes)
 
 ```bash
-# في Terminal الأول:
+# In the first terminal:
 python main.py
 ```
 
-يجب أن ترى:
+You should see:
 ```
-🚀 الخادم يعمل على: http://localhost:8000
+🚀 Server running at: http://localhost:8000
 📋 Swagger Docs: http://localhost:8000/docs
 🔗 Webhook URL: http://localhost:8000/webhook
 ```
 
 ---
 
-### الخطوة 5 — ngrok للـ Webhook (3 دقائق)
+### Step 5 — ngrok for the Webhook (3 minutes)
 
 ```bash
-# في Terminal الثاني:
+# In the second terminal:
 ngrok http 8000
 ```
 
-ستظهر رسالة مثل:
+You will see a message like:
 ```
 Forwarding   https://abc123.ngrok-free.app -> http://localhost:8000
 ```
 
-**انسخ الرابط** `https://abc123.ngrok-free.app`
+**Copy the URL** `https://abc123.ngrok-free.app`
 
 ---
 
-### الخطوة 6 — إعداد Twilio Sandbox (5 دقائق)
+### Step 6 — Twilio Sandbox Setup (5 minutes)
 
-1. اذهب لـ [Twilio Console → Messaging → WhatsApp Sandbox](https://console.twilio.com/us1/develop/sms/settings/whatsapp-sandbox)
-2. في حقل **"WHEN A MESSAGE COMES IN"** ضع:
+1. Go to [Twilio Console → Messaging → WhatsApp Sandbox](https://console.twilio.com/us1/develop/sms/settings/whatsapp-sandbox)
+2. In the **"WHEN A MESSAGE COMES IN"** field, enter:
    ```
    https://abc123.ngrok-free.app/webhook
    ```
-3. اضغط **Save**
+3. Click **Save**
 
-#### ربط هاتفك بالـ Sandbox:
-1. افتح واتساب على هاتفك
-2. أرسل الرسالة المكتوبة في الـ Sandbox (مثل: `join bright-elephant`)
-3. للرقم المذكور في الصفحة
-4. ستصلك رسالة تأكيد ✅
-
----
-
-### ✅ ابدأ التجربة!
-
-الآن أرسل أي رسالة من واتساب:
-- `مرحبا` ← ترحيب + قائمة رئيسية
-- `1` ← تصفح المنتجات
-- `2` ← تتبع الطلبات
-- `ORD-1001` ← تفاصيل طلب
-- `ORD-1002` ← طلب قيد الشحن
-- `3` ← الأسئلة الشائعة
-- `ما سياسة الإرجاع؟` ← رد مباشر
+#### Connect your phone to the Sandbox:
+1. Open WhatsApp on your phone
+2. Send the message shown in the Sandbox (for example: `join bright-elephant`)
+3. To the number shown on the page
+4. You will receive a confirmation message ✅
 
 ---
 
-## 📁 هيكل المشروع
+### ✅ Start Testing!
+
+Now send any message from WhatsApp (the agent replies in Arabic):
+- `Hello` or `مرحبا` → greeting + main menu
+- `1` → browse products
+- `2` → track orders
+- `ORD-1001` → order details
+- `ORD-1002` → order in shipping
+- `3` → FAQs
+- `ما سياسة الإرجاع؟` (What is the return policy?) → direct answer
+
+---
+
+## 📁 Project Structure
 
 ```
 whatsapp_agent/
-├── main.py                 # نقطة الدخول — FastAPI + Webhook
-├── .env                    # 🔑 نموذج المتغيرات
-├── requirements.txt        # 📦 المكتبات
+├── main.py                 # Entry point — FastAPI + Webhook
+├── .env                    # 🔑 Environment variables template
+├── requirements.txt        # 📦 Dependencies
 │
 ├── agent/
-│   ├── graph.py            # 🧠 LangGraph — بناء الـ Graph
-│   ├── nodes.py            # ⚙️  وظيفة كل Node
-│   ├── state.py            # 📊 تعريف الحالة
-│   └── prompts.py          # 💬 الـ System Prompts
+│   ├── graph.py            # 🧠 LangGraph — builds the graph
+│   ├── nodes.py            # ⚙️  Logic for each node
+│   ├── state.py            # 📊 State definition
+│   └── prompts.py          # 💬 System prompts
 │
 ├── whatsapp/
-│   ├── base.py             # 🔌 Abstract Adapter
-│   └── twilio_adapter.py   # 📱 تنفيذ Twilio
+│   ├── base.py             # 🔌 Abstract adapter
+│   └── twilio_adapter.py   # 📱 Twilio implementation
 │
 ├── tools/
-│   └── store_tools.py      # 🛒 أدوات البحث في المتجر
+│   └── store_tools.py      # 🛒 Store search tools
 │
 └── data/
-    ├── products.json        # 🛍️ بيانات المنتجات
-    ├── orders.json          # 📦 بيانات الطلبات
-    └── faqs.json            # ❓ الأسئلة الشائعة
+    ├── products.json        # 🛍️ Product data
+    ├── orders.json          # 📦 Order data
+    └── faqs.json            # ❓ Frequently asked questions
 ```
 
 ---
 
-## 🔄 تبديل المنصة (الـ Adapter Pattern)
+## 🔄 Switching Platforms (Adapter Pattern)
 
-لتغيير منصة واتساب، غيّر سطراً واحداً فقط في `main.py`:
+To change the WhatsApp provider, change only one line in `main.py`:
 
 ```python
-# حالياً:
+# Current:
 whatsapp = TwilioAdapter()
 
-# مستقبلاً (مثلاً):
+# Future (for example):
 whatsapp = GreenAPIAdapter()
 whatsapp = MetaCloudAdapter()
 ```
 
 ---
 
-## 📦 طلبات الديمو الجاهزة
+## 📦 Demo Orders
 
-| رقم الطلب | الحالة          |
-|-----------|----------------|
-| ORD-1001  | ✅ تم التسليم  |
-| ORD-1002  | 🚚 قيد الشحن   |
-| ORD-1003  | ⏳ قيد المعالجة |
-| ORD-1004  | 📦 تم الشحن    |
+| Order ID | Status           |
+|----------|------------------|
+| ORD-1001 | ✅ Delivered     |
+| ORD-1002 | 🚚 In transit    |
+| ORD-1003 | ⏳ Processing    |
+| ORD-1004 | 📦 Shipped       |
 
 ---
 
-## 🛠️ استكشاف الأخطاء
+## 🛠️ Troubleshooting
 
-| المشكلة | الحل |
-|---------|------|
-| الوكيل لا يرد | تحقق أن ngrok يعمل وأن الـ Webhook محدّث في Twilio |
-| خطأ OpenRouter | تأكد أن مفتاح API صحيح وأن النموذج متاح مجاناً |
-| خطأ Twilio auth | تأكد من Account SID و Auth Token |
-| الهاتف لا يستقبل | أعد إرسال رسالة الـ Sandbox join |
+| Problem | Solution |
+|---------|----------|
+| The agent does not reply | Check that ngrok is running and the webhook is updated in Twilio |
+| OpenRouter error | Make sure the API key is correct and the model is available for free |
+| Twilio auth error | Check the Account SID and Auth Token |
+| The phone does not receive messages | Resend the Sandbox join message |
